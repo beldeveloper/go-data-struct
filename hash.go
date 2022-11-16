@@ -26,7 +26,7 @@ type HashTable[KT comparable, VT any] struct {
 func (ht *HashTable[KT, VT]) Set(key KT, val VT) {
 	i := ht.bucketIndex(key)
 	ht.mux.Lock()
-	ht.mux.Unlock()
+	defer ht.mux.Unlock()
 	ht.bucket[i].set(key, val)
 }
 
@@ -34,7 +34,7 @@ func (ht *HashTable[KT, VT]) Set(key KT, val VT) {
 func (ht *HashTable[KT, VT]) Del(key KT) {
 	i := ht.bucketIndex(key)
 	ht.mux.Lock()
-	ht.mux.Unlock()
+	defer ht.mux.Unlock()
 	ht.bucket[i].del(key)
 }
 
